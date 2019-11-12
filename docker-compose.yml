@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  db:
+    image: postgres:9.6
+    restart: always
+    ports:
+      - 5432:5000
+    volumes:
+      - .database/dbdata:/var/lib/postgresql/data  
+    environment:
+      - PGDATA=postgresql
+      - POSTGRES_USER=bank_account
+      - POSTGRES_PASSWORD=bank_password
+      - PG_PASSWORD=bank_password
+  api:
+    build: ./
+    command: rails s -b 0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
