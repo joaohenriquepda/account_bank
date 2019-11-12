@@ -3,12 +3,12 @@ class AuthenticationController < ApplicationController
 
     # POST /auth/login
     def login
-        @user = User.find_by_cpf(params[:cpf])
-        if @user&.authenticate(params[:password])
-        token = JsonWebToken.encode(user_id: @user.id)
+        @account = Account.find_by_cpf(params[:cpf])
+        if @account&.authenticate(params[:password])
+        token = JsonWebToken.encode(account_id: @account.id)
         time = Time.now + 24.hours.to_i
         render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                        cpf: @user.cpf,account_balance: @account_balance }, status: :ok
+                        cpf: @account.cpf }, status: :ok
         else
         render json: { error: 'unauthorized' }, status: :unauthorized
         end
