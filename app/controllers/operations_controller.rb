@@ -1,24 +1,26 @@
 class OperationsController < ApplicationController
 
-    SECRET_KEY = Rails.application.secrets.secret_key_base. to_s
+    #GET /operations
+    def index
+        render json: Operation.all.order("created_at DESC")
+    end
 
     # POST /operations
-    def transfer
-        begin
-            if JsonWebToken.decode(request.headers["Authorization"])["account_id"] == params[:source_account_id] 
-                Operation.create operations_params
-                render json: {status: "Success", message: "Operação finalizada com sucesso" }
-            else
-                render json: {status: "unauthorized", message: "Não é permitido executar essa ação por outro usuário" }
-            end
-        rescue StandardError => e
-            render json: {status: "error", message: e.message}
-        end 
+    def create
+
+        jwt_account_id = JsonWebToken.decode(request.headers["Authorization"])["account_id"]
+        if jwt_account_id == params[:source_account_id] 
+            @operation = Operation.create operations_params  
+            render json: @operation
+        else
+            render json: { status: "error", message: "Não é possível realizar essa opção por outra conta" }
+        end
+   
     end
 
     private
         def operations_params
-            params.permit(
+            params.require(:operation).permit(
                 :amount, :source_account_id, :destination_account_id, :option
             )
         end

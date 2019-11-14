@@ -17,30 +17,48 @@ class Operation < ApplicationRecord
             destination = Account.find(args[:destination_account_id])
 
             if option == "transfer"
-                transfer amount,source,destination
+                transfer source, destination, amount
+                @status = { status: "error", message: self.error}
+                args = defaults.merge(args)
             end
             if option == "deposit"
                 deposit destination, amount
+                args = defaults.merge(args)
             end
         rescue StandardError => e
-            self.errors.add(:unauthorized, "Problema com as contas informadas")
+            @status = { status: "error", message: e}
+            args = defaults.merge(args)
         end  
-            
-        super   
+
+        super
+    
     end
 
     private
+
+        # Transferência deve consultar o saldo
         def transfer source, destination, amount 
+            
             if amount > source.account_balance
-                self.errors.add(:unauthorized, "Saldo insuficiente")
+                raise StandardError.new 'Saldo Insuficiente'
             else
                 destination.update(account_balance: destination.account_balance + amount)
+                source.update(account_balance: source.account_balance - amount)
             end   
         end
 
+        # Operação de depósito só poderá ser feita por ADM
         def deposit destination, amount
             destination.update(account_balance: destination.account_balance + amount)
         end
 
+        # TODO - Acrescentar atributos para log das operações no sistema 
+        def defaults
+            {status: @status}
+        end
+
+        # def defaults_success
+        #     {status: "success"}
+        # end
 
 end

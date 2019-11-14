@@ -41,7 +41,12 @@ Account.create({
 	account_balance: 900.00
 })
 
+
+# ERROR
 Operation.create({source_account_id:1,destination_account_id:2, amount:20,option: "transfer"})
+#SUCCESS
 Operation.create({source_account_id:3,destination_account_id:1,amount:10,option: "transfer"})
+# ERROR
 Operation.create({source_account_id:1,destination_account_id:2,amount:30, option: "transfer"})
+# ERROR
 Operation.create({source_account_id:7,destination_account_id:2,amount:30, option: "transfer"})
