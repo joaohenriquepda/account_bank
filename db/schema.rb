@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_083951) do
+ActiveRecord::Schema.define(version: 2019_11_14_100504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 2019_11_12_083951) do
     t.float "account_balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "operations", force: :cascade do |t|
+    t.float "amount"
+    t.bigint "source_account_id"
+    t.bigint "destination_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "option"
+    t.json "status", default: "{}"
+    t.index ["destination_account_id"], name: "index_operations_on_destination_account_id"
+    t.index ["source_account_id"], name: "index_operations_on_source_account_id"
   end
 
 end

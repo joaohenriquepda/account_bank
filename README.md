@@ -1,24 +1,59 @@
-# README
+# Account Bank
+    API permite registrar uma nova conta, realizar tranferência, depósito e consultar saldo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Ambiente de desenvolvimento
+- Ruby 2.5.0
+- Ruby on Rails 5.2
+- Postgres 9.6
+- Docker para contêiners
+- Docker-compose para serviços
 
-Things you may want to cover:
+# Executando o ambiente de desenvolvimento
 
-* Ruby version
+O ambiente já está preparado para com um único comando realizar toda configuração necessária. Basta ter configurado o docker e docker-compose. Caso ainda não tenha tem dois arquivos na raíz do projeto que podem te ajudar a instalar.
+Caso já tenha esse requisito na sua máquina basta executar o comando abaixo na raíz do projeto.
 
-* System dependencies
+```bash
+$ docker-compose up
+```
+Caso precise acessar dentro do contêiner execute o comando
 
-* Configuration
+```bash
+$ docker-compose exec api /bin/bash
+```
 
-* Database creation
+Temos uma arquivo de automatização do processo de configuração do banco de dados
 
-* Database initialization
+```bash
+$ ./cleanDB.sh
+``` 
+Caso queira executar os testes acesse o terminal e execute
 
-* How to run the test suite
+```bash
+$ rails test
+```
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+# Links Úteis
+Caso queira acessar a API estamos disponibilizando uma URL. Esse projeto está hospedado na Heroku
 
-* ...
+[dedede](url)
+
+# Implementações
+- Autênticação realizada com JWT (Json Web Token)
+- Registro de uma nova conta 
+- Login em uma conta existente
+- Listar um usuário específico
+- Consulta saldo de uma conta
+
+# GNU General Public License v3.0
+Esse projeto está sob a licença GNU 3.0
+
+# Código de Conduta
+Para contribuir com esse projeto é necessário seguir o código de conduto. Para mais informações leia o arquivo CODE_OF_CONDUCT.md que se encontra na raíz do projeto.
+
+# Contribuições 
+Caso queira contribuir com o projeto esse algumas evoluções que podem ser feitas. Caso tenha outra em mente ficaremos felizes em receber sua contribuição
+    
+- Permissões de contas para ADM
+- Outras operações de transação bancária

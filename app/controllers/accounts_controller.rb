@@ -3,6 +3,9 @@ class AccountsController < ApplicationController
     before_action :find_account, except: %i[create index]
 
 
+    def index 
+        render json: Account.all
+    end
 
     # GET /account/{cpf}
     def show
@@ -13,9 +16,9 @@ class AccountsController < ApplicationController
     def create
         @account = Account.new(account_params)
         if @account.save
-        render json: @account, status: :created
+            render json: @account, status: :created
         else
-        render json: { errors: @account.errors.full_messages },
+            render json: { errors: @account.errors.full_messages },
                 status: :unprocessable_entity
         end
     end
@@ -43,7 +46,7 @@ class AccountsController < ApplicationController
 
     def account_params
         params.permit(
-        :account_balance, :name, :cpf, :email, :password, :password_confirmation
+            :account_balance, :name, :cpf, :email, :password, :password_confirmation
         )
     end
 end
