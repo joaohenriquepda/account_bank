@@ -1,14 +1,20 @@
 class AccountsController < ApplicationController
-    before_action :authorize_request, except: :create
-    before_action :find_account, except: %i[create index]
-
+    before_action :authorize_request, except: %i[create show index]
+    before_action :find_account, except: %i[create index show_by_cpf]
+    before_action :find_account_cpf, only: %i[show_by_cpf]
 
     def index 
         render json: Account.all
     end
 
-    # GET /account/{cpf}
+    # GET /account/:account_id
     def show
+        render json: @account, status: :ok
+    end
+
+    # 
+    # GET /account/cpf/:cpf
+    def show_by_cpf
         render json: @account, status: :ok
     end
 
@@ -23,7 +29,7 @@ class AccountsController < ApplicationController
         end
     end
 
-    # PUT /account/{account_id}
+    # PUT /account/:account_id
     def update
         unless @account.update(account_params)
         render json: { errors: @account.errors.full_messages },
@@ -31,21 +37,29 @@ class AccountsController < ApplicationController
         end
     end
 
-    # DELETE /account/{accountname}
+    # DELETE /account/:account_id
     def destroy
         @account.destroy
     end
 
     private
 
-    def find_account
-        @account = Account.find_by_cpf!(params[:_cpf])
+    def find_account_cpf
+        puts "cpf"
+        @account = Account.find_by_cpf!(params[:cpf])
         rescue ActiveRecord::RecordNotFound
-        render json: { errors: 'account not found' }, status: :not_found
+        render json: { status: :not_found, message: 'Conta não existente' }
+    end
+
+
+    def find_account
+        @account = Account.find_by_id!(params[:id])
+        rescue ActiveRecord::RecordNotFound
+        render json: { status: :not_found, message: 'Conta não existente' }
     end
 
     def account_params
-        params.permit(
+        params.require(:account).permit(
             :account_balance, :name, :cpf, :email, :password, :password_confirmation
         )
     end

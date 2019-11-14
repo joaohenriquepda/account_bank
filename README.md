@@ -33,11 +33,42 @@ Caso queira executar os testes acesse o terminal e execute
 $ rails test
 ```
 
-
 # Links Úteis
 Caso queira acessar a API estamos disponibilizando uma URL. Esse projeto está hospedado na Heroku
 
-[dedede](url)
+[https://account-bank.herokuapp.com/](https://account-bank.herokuapp.com/)
+
+
+# Endpoints
+
+Existe um arquivo do programa POSTMAN na raíz do projeto que traz todas rotas mais usadas com os paramêtros.
+
+```bash
+Account-Bank.postman_collection.json
+```
+
+Alguns endpoints precisam que seja passado como paramêtro no Header "Authorization" o hash gerado do JWT para autenticação do usuário que está usando a API. Abaixo as rotas da API e o detalhmento de quais vão precisar de autenticação
+
+```bash
+# SEM USO DE AUTENTICAÇãO
+POST '/accounts'; paramêtros: name,cpf,password,password_confirmation, account_balance
+POST '/auth/login'; paramêtros: cpf, password
+GET '/account/:id'; paramêtros: id
+POST '/operations', paramêtros: source_account_id, destination_account_id, amount, type
+
+
+# USO COM AUTENTICAÇÃO
+GET '/account/cpf/:cpf'; paramêtros: cpf
+GET '/operations'; 
+POST '/operations/jwt', paramêtros: source_account_id, destination_account_id, amount, type
+
+get '/account/cpf/:cpf', to: 'accounts#show_by_cpf'
+  get '/operations', to: 'operations#index' 
+  post '/operations/jwt', to: 'operations#create_with_jwt'
+
+
+```
+
 
 # Implementações
 - Autênticação realizada com JWT (Json Web Token)

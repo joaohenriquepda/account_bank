@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "23a92f2a-0fb7-4ba1-96a4-cfb7be731db6",
+		"name": "Account Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register new user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"User Postman\",\n\t\"cpf\": \"000000\",\n\t\"email\":\"user_postman@gmail.com\",\n\t\"password\":\"userpostman\",\n\t\"password_confirmation\":\"userpostman\",\n\t\"account_balance\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cpf\":\"000000\",\n\t\"password\":\"userpostman\"\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Specific User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo1LCJleHAiOjE1NzM3NTM2MDN9.sRZVkDwhXb1Wi-TSxq8CSiYf4Fq7WoqugrCv6eUCFHA"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/accounts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tranfer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"source_account_id\":5,\n\t\"destination_account_id\":2,\n\t\"amount\":200000,\n\t\"option\":\"transfer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tranfer with JWT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo1LCJleHAiOjE1NzM4NDE0MDV9.LYQt87WT1dlHLt_VVeJjOP5IWnZlIH6KehFsF-PVaB0"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"source_account_id\":5,\n\t\"destination_account_id\":2,\n\t\"amount\":200000,\n\t\"option\":\"transfer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/operations/jwt",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"operations",
+						"jwt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista all Account",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxLCJleHAiOjE1NzM4MTI0NzJ9.0YsF0G3mCQNxLhC9wM2cAx_Dxgpae6otdwBofls04rs"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all operations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxLCJleHAiOjE1NzM4MTI0NzJ9.0YsF0G3mCQNxLhC9wM2cAx_Dxgpae6otdwBofls04rs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Specific Account with cpf  and JWT",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo1LCJleHAiOjE1NzM4NDE0MDV9.LYQt87WT1dlHLt_VVeJjOP5IWnZlIH6KehFsF-PVaB0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000//account/cpf/000000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"",
+						"account",
+						"cpf",
+						"000000"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
